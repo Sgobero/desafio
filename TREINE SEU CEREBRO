@@ -1,0 +1,104 @@
+#include<iostream>
+#include<fstream>
+#include<algorithm>
+#include<vector>
+
+using namespace std;
+
+int main(){
+
+    vector <string> astarefas;
+    string tarefa;
+    string op;
+    string opc;
+    string opca;
+    int linha;
+
+        cout << "Digite uma tarefa: " <<endl;
+
+        do{
+
+            getline(cin, tarefa);
+            astarefas.push_back(tarefa);
+
+            cout << "Quer continuar?(digite *n* para parar)" <<endl;
+            cin >> op;
+
+            if( op != "n"){
+
+                cout << "Digite outra tarefa: " <<endl;
+                getline(cin, tarefa);
+                astarefas.push_back(tarefa);
+            }
+
+        }while( op != "n");
+
+            cout << "Sua lista de tarefas (em ordem de digitacao) ficou assim: " <<endl;
+            for(int i = 0 ; i < astarefas.size() ; i++){
+            cout <<astarefas[i] << endl;
+
+        }
+            cout <<endl;
+
+            cout << "Deseja retirar alguma tarefa? (digite *s* para tirar e *n* para continuar)" <<endl;
+            cin >> opc;
+
+            if(opc == "s"){
+     apagar:    cout << "Informe qual linha voce deseja retirar: " <<endl;
+                cin >> linha;
+
+                    astarefas.erase(astarefas.begin() + linha);
+            cout << "Sua lista de tarefas (em ordem de digitacao) ficou assim: " <<endl;
+            for(int i = 0 ; i < astarefas.size() ; i++){
+            cout <<astarefas[i] << endl;
+
+        }
+
+                    cout << "Deseja apagar mais outra tarefa?(digite *s* para tirar e *n* para continuar)" <<endl;
+                    cin >> opca;
+
+                    if(opca == "s"){
+                        goto apagar;
+                    }
+            }
+
+
+        ofstream tarefas;
+
+        tarefas.open("tarefas.txt", ios::app);
+
+        sort(astarefas.begin() , astarefas.end());
+
+        for(int i = 0 ; i < astarefas.size() ; i++){
+            tarefas <<astarefas[i] <<endl;
+
+        }
+
+        tarefas.close();
+
+        ifstream listadetar;
+        listadetar.open("tarefas.txt");
+
+        string tarefa2;
+
+        cout << "Sua lista final, agora em ordem alfabética, ficou assim: " <<endl;
+        while(!listadetar.eof()){
+            getline(listadetar, tarefa2);
+            cout << tarefa2 <<endl;
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+return 0;
+}
