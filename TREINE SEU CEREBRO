@@ -8,6 +8,7 @@ using namespace std;
 int main(){
 
     vector <string> astarefas;
+    vector <string> novatarefas;
     string tarefa;
     string op;
     string opc;
@@ -15,27 +16,41 @@ int main(){
     int linha;
 
         cout << "Digite uma tarefa: " <<endl;
+        getline(cin, tarefa);
+
+        astarefas.push_back(tarefa);
+        tarefa.clear();
 
         do{
 
-            getline(cin, tarefa);
-            astarefas.push_back(tarefa);
 
             cout << "Quer continuar?(digite *n* para parar)" <<endl;
             cin >> op;
+            cin.ignore(1, '\n');
 
             if( op != "n"){
 
                 cout << "Digite outra tarefa: " <<endl;
                 getline(cin, tarefa);
+
                 astarefas.push_back(tarefa);
+                tarefa.clear();
             }
 
-        }while( op != "n");
+
+        } while( op != "n");
+
+
+
+
+        for(string a : novatarefas){
+                cout << a <<endl;
+        }
 
             cout << "Sua lista de tarefas (em ordem de digitacao) ficou assim: " <<endl;
-            for(int i = 0 ; i < astarefas.size() ; i++){
-            cout <<astarefas[i] << endl;
+
+        for(int i = 0 ; i < astarefas.size(); i++){
+            cout << i + 1 <<"º TAREFA: " <<astarefas[i] << endl;
 
         }
             cout <<endl;
@@ -47,11 +62,10 @@ int main(){
      apagar:    cout << "Informe qual linha voce deseja retirar: " <<endl;
                 cin >> linha;
 
-                    astarefas.erase(astarefas.begin() + linha);
+                    astarefas.erase(astarefas.begin() + linha - 1);
             cout << "Sua lista de tarefas (em ordem de digitacao) ficou assim: " <<endl;
             for(int i = 0 ; i < astarefas.size() ; i++){
-            cout <<astarefas[i] << endl;
-
+                cout << i + 1 <<"º TAREFA: " <<astarefas[i] << endl;
         }
 
                     cout << "Deseja apagar mais outra tarefa?(digite *s* para tirar e *n* para continuar)" <<endl;
@@ -63,36 +77,32 @@ int main(){
             }
 
 
-        ofstream tarefas;
+            ofstream tarefas;
 
-        tarefas.open("tarefas.txt", ios::app);
+            tarefas.open("tarefas.txt", ios::app);
 
-        sort(astarefas.begin() , astarefas.end());
+            sort(astarefas.begin() , astarefas.end());
 
         for(int i = 0 ; i < astarefas.size() ; i++){
             tarefas <<astarefas[i] <<endl;
 
         }
 
-        tarefas.close();
+            tarefas.close();
 
-        ifstream listadetar;
-        listadetar.open("tarefas.txt");
+            ifstream listadetar;
+            listadetar.open("tarefas.txt");
 
-        string tarefa2;
+            string tarefa2;
 
-        cout << "Sua lista final, agora em ordem alfabética, ficou assim: " <<endl;
+            cout << "Sua lista final, agora em ordem alfabética, ficou assim: " <<endl;
+
         while(!listadetar.eof()){
             getline(listadetar, tarefa2);
             cout << tarefa2 <<endl;
 
 
         }
-
-
-
-
-
 
 
 
